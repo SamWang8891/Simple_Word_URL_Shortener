@@ -23,6 +23,7 @@ then
     then
         echo ""
         echo "Python3 not found on your system and the automated install script is only for debian-based systems."
+        echo "Or it just simply lacks the sudo power."
         echo "Please install python3 manually."
         exit 1
     fi
