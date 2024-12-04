@@ -1,0 +1,13 @@
+services:
+  simple-word-url-shortener:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: simpleword-url-shortener
+    volumes:
+      - ./app:/app
+      - ./app/nginx/nginx.conf:/etc/nginx/sites-available/default
+    ports:
+      - "0.0.0.0:8887:80" # Host:Container
+    container_name: simple-word-url-shortener
+    restart: unless-stopped
