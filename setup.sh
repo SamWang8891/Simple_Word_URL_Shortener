@@ -46,6 +46,7 @@ echo "If you are routing this thorugh a proxy, you should enter the proxied info
 echo ""
 read -p "Please enter: " baseurl
 echo "BASE_URL=$baseurl" > .env
+cp .env app/.env
 
 # Dictionary confirmation
 echo ""
