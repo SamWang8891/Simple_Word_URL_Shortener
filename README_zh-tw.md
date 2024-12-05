@@ -4,7 +4,7 @@
 
 [Link for English version](README.md)
 
-覺得隨機生成的短網址太過難記嗎？這個可能很適合你！它能夠生成由常見英文單字組成的短網址，例如 https://example.com/the 。
+覺得隨機生成的短網址太過難記嗎？這個可能很適合你！它能夠生成由常見英文單字組成的短網址，例如 [https://example.com/the](https://google.com)。
 
 ![display1](images/display1.png)
 
