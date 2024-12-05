@@ -4,7 +4,7 @@ A very simple url shortener that shorts the url into a common English vocabulary
 
 [台灣繁體中文 請按這](README_zh-tw.md)
 
-Found the random generated to hard to remenber? This one might be a perfect choice for you! It generates the shortened url like https://example.com/the so that it is easy remenberable.
+Found the random generated to hard to remenber? This one might be a perfect choice for you! It generates the shortened url like [https://example.com/the](https://google.com) so that it is easy remenberable.
 
 ![display1](images/display1.png)
 
