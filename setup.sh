@@ -69,5 +69,5 @@ chmod -R 777 app
 
 # Docker compose up
 echo ""
-docker-compose up --build -d
+docker compose up --build -d
 
