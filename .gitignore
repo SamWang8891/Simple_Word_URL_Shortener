@@ -1,0 +1,3 @@
+*.db
+.env
+to-do.txt

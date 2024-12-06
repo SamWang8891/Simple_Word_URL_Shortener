@@ -4,7 +4,7 @@
 
 [Link for English version](README.md)
 
-覺得隨機生成的短網址太過難記嗎？這個可能很適合你！它能夠生成由常見英文單字組成的短網址，例如 https://example.com/the。
+覺得隨機生成的短網址太過難記嗎？這個可能很適合你！它能夠生成由常見英文單字組成的短網址，例如 [https://example.com/the](https://google.com)。
 
 ![display1](images/display1.png)
 
@@ -18,7 +18,7 @@
 4. (非必要) 你可以將其掛載代理伺服器的後面並將base url改成你所指派的。
 5. 大功告成！
 
-## 鳴謝
+## 鳴謝 / 部份程式碼來源
 
 * 本 repo 中預設的 dictionary.txt 是來自於 [powerlanguage/word-lists](https://github.com/powerlanguage/word-lists/tree/master)。
 
