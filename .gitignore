@@ -1,3 +1,4 @@
 *.db
 .env
 to-do.txt
+__pycache__
