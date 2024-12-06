@@ -1,21 +1,5 @@
 #!/bin/sh
 
-# Check if simple-word-url-shortener is already installed on docker
-if [ "$(docker ps -aq -f name=simple-word-url-shortener)" ]; then
-    read -p "There is an existing one, do you want to reinstall and reconfigure it? (yes/no): " confirm
-    if [ $confirm == "yes" ]; then
-        echo ""
-        echo "Stopping please wait patiently..."
-        docker stop simple-word-url-shortener
-        docker-compose down
-        docker rm simple-word-url-shortener
-    else
-        echo "Exiting..."
-        echo ""
-        exit 1
-    fi
-fi
-
 # Check if python3 is installed, if not then do auto install
 if ! command -v python3 &> /dev/null
 then
@@ -38,6 +22,42 @@ then
         exit 1
     fi
     exit 1
+fi
+
+# Check if docker is installed
+if
+    ! command -v docker &>/dev/null
+then
+    echo ""
+    echo "Docker not found on your system, or it just simply lacks the sudo power."
+    echo "Please install docker."
+    exit 1
+fi
+
+# Check if docker compose is installed
+if
+    ! command -v docker compose &>/dev/null
+then
+    echo ""
+    echo "Docker compose not found on your system."
+    echo "Please install docker compose."
+    exit 1
+fi
+
+# Check if simple-word-url-shortener is already installed on docker
+if [ "$(docker ps -aq -f name=simple-word-url-shortener)" ]; then
+    read -p "There is an existing one, do you want to reinstall and reconfigure it? (yes/no): " confirm
+    if [ $confirm == "yes" ]; then
+        echo ""
+        echo "Stopping please wait patiently..."
+        docker stop simple-word-url-shortener
+        docker-compose down
+        docker rm simple-word-url-shortener
+    else
+        echo "Exiting..."
+        echo ""
+        exit 1
+    fi
 fi
 
 # Generate .env and set baseurl and link it to app/.env
@@ -70,4 +90,3 @@ chmod -R 777 app
 # Docker compose up
 echo ""
 docker compose up --build -d
-
