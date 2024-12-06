@@ -24,6 +24,7 @@ if ($request_url === '/' || $request_url === '/index.php') {
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
     <style>
         body {
+            image-rendering: pixelated;
             font-family: Arial, sans-serif;
             background-color: #f0f8f5;
             color: #333;
@@ -131,6 +132,12 @@ if ($request_url === '/' || $request_url === '/index.php') {
             $create_url = str_replace(['`', '$', '(', ')'], '', $create_url);
             $output = shell_exec("echo $create_url | python3 /app/python/create_record.py");
             echo "<p>Shortened URL: <a href=\"$output\" target=\"_blank\">$output</a></p>";
+            //create qr code
+            $route = shell_exec("echo $create_url | python3 /app/python/qrcode.py");
+            sleep(0.5);
+            $filename = preg_replace('/[^a-zA-Z0-9]/', '.', $create_url);
+            echo "<img src='$route' alt='QR Code' style='width: 200px; height: 200px;'>";
+            shell_exec("rm /app/images/$filename.png");
         } elseif ($action === 'delete' && !empty($_POST['delete_url'])) {
             $delete_url = escapeshellarg($_POST['delete_url']);
             $delete_url = filter_var($delete_url, FILTER_SANITIZE_URL);

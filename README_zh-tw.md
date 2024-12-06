@@ -18,7 +18,7 @@
 4. (非必要) 你可以將其掛載代理伺服器的後面並將base url改成你所指派的。
 5. 大功告成！
 
-## 鳴謝
+## 鳴謝 / 部份程式碼來源
 
 * 本 repo 中預設的 dictionary.txt 是來自於 [powerlanguage/word-lists](https://github.com/powerlanguage/word-lists/tree/master)。
 

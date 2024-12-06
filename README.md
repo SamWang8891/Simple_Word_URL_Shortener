@@ -18,7 +18,7 @@ Found the random generated to hard to remenber? This one might be a perfect choi
 4. (Optional) You can route this thorugh a proxy and change the base url to match your usage.
 5. Have fun!
 
-## Special thanks
+## Special thanks / Sources
 
 * The dictionary.txt comes alone with this repository is from [powerlanguage/word-lists](https://github.com/powerlanguage/word-lists/tree/master).
 
