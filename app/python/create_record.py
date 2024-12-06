@@ -1,6 +1,9 @@
 import sqlite3
-from dotenv import load_dotenv
 import os
+import re
+import segno
+from dotenv import load_dotenv
+
 
 
 if __name__ == '__main__':
@@ -29,6 +32,12 @@ if __name__ == '__main__':
         cur.execute("UPDATE dict SET used = 0 WHERE word = ?", (existing_short,))
         cur.execute("UPDATE urls SET short = ? WHERE orig = ?", (shortened_url, original_url))
         print(f"{base_url}/{shortened_url}")
+
+    
+    url = base_url + "/" + shortened_url
+    qrcode = segno.make_qr(url)
+    filename = re.sub(r'[^a-zA-Z0-9]', '.', url)
+    qrcode.save(f"/app/images/{filename}.png")
 
     con.commit()
     con.close()
