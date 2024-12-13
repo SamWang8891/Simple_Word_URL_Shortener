@@ -8,7 +8,7 @@
 
 ![display1](images/display1.png)
 
-## Usage
+## 使用方式
 
 1. Git clone 到你的偏好位置
    `git clone https://github.com/SamWang8891/Simple_Word_URL_Shortener`
