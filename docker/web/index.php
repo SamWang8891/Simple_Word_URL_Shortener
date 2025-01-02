@@ -5,15 +5,43 @@
 // Redirect Section
 $request_url = $_SERVER['REQUEST_URI'];
 
-if ($request_url === '/' || $request_url === '/index.php') {
-    // Do nothing
-} else {
+if (!($request_url === '/' || $request_url === '/index.php')) {
     $request_url = ltrim($request_url, '/');
-    $request_url = filter_var($request_url, FILTER_SANITIZE_URL);
-    $request_url = str_replace(['`', '$', '(', ')'], '', $request_url);
-    $output = shell_exec("echo $request_url | python3 /app/python/search_record.py");
+    $request_url = base64_encode($request_url);
+    $escaped_request_url = escapeshellarg($request_url);
+    $output = shell_exec("echo $escaped_request_url | python3 /docker/python/search_record.py");
     header("Location: $output");
     exit();
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $action = $_POST['action'];
+
+    if ($action === 'create' && !empty($_POST['create_url'])) {
+        $filename = preg_replace('/[^a-zA-Z0-9]/', '.', $create_url);
+        $create_url = base64_encode($_POST['create_url']);
+        $create_url = escapeshellarg($create_url);
+        $output = shell_exec("echo $create_url | python3 /docker/python/create_record.py");
+        $route = shell_exec("echo $create_url | python3 /docker/python/gen_qrcode.py");
+
+        echo "<p>Shortened URL: <a href=\"$output\" target=\"_blank\">$output</a></p>";
+        echo "<img src='$route' alt='QR Code' style='width: 200px; height: 200px;'>";
+        
+        sleep(1);
+        shell_exec("echo $filename | bash /docker/script/del_qrcode.sh");
+    } 
+    elseif ($action === 'delete' && !empty($_POST['delete_url'])) {
+        $delete_url = base64_encode($_POST['delete_url']);
+        $delete_url = escapeshellarg($delete_url);
+        $output = shell_exec("echo $delete_url | python3 /docker/python/delete_record.py");
+        
+        echo "<p>$output</p>";
+    } 
+    elseif ($action === 'purge') {
+        $output = shell_exec("python3 /docker/python/delete_every_record.py");
+        
+        echo "<p>$output</p>";
+    }
 }
 ?>
 
@@ -102,7 +130,9 @@ if ($request_url === '/' || $request_url === '/index.php') {
 </head>
 
 <body>
+    
     <h1>URL Shortener</h1>
+    
     <form method="post">
         <label for="create_url">Enter URL to shorten:</label>
         <input type="text" id="create_url" name="create_url">
@@ -122,34 +152,6 @@ if ($request_url === '/' || $request_url === '/index.php') {
         </div>
     </form>
 
-    <?php
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $action = $_POST['action'];
-
-        if ($action === 'create' && !empty($_POST['create_url'])) {
-            $create_url = escapeshellarg($_POST['create_url']);
-            $create_url = filter_var($create_url, FILTER_SANITIZE_URL);
-            $create_url = str_replace(['`', '$', '(', ')'], '', $create_url);
-            $output = shell_exec("echo $create_url | python3 /app/python/create_record.py");
-            echo "<p>Shortened URL: <a href=\"$output\" target=\"_blank\">$output</a></p>";
-            //create qr code
-            $route = shell_exec("echo $create_url | python3 /app/python/qrcode.py");
-            sleep(0.5);
-            $filename = preg_replace('/[^a-zA-Z0-9]/', '.', $create_url);
-            echo "<img src='$route' alt='QR Code' style='width: 200px; height: 200px;'>";
-            shell_exec("rm /app/images/$filename.png");
-        } elseif ($action === 'delete' && !empty($_POST['delete_url'])) {
-            $delete_url = escapeshellarg($_POST['delete_url']);
-            $delete_url = filter_var($delete_url, FILTER_SANITIZE_URL);
-            $delete_url = str_replace(['`', '$', '(', ')'], '', $delete_url);
-            $output = shell_exec("echo $delete_url | python3 /app/python/delete_record.py");
-            echo "<p>$output</p>";
-        } elseif ($action === 'purge') {
-            $output = shell_exec("python3 /app/python/delete_every_record.py");
-            echo "<p>$output</p>";
-        }
-    }
-    ?>
 </body>
 
 </html>

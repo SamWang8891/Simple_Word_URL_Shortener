@@ -10,11 +10,16 @@ def add_prot(url):
 
 
 if __name__ == '__main__':
-    load_dotenv(os.path.join(os.path.dirname(__file__), '.env'))
+    load_dotenv(os.path.join(os.path.dirname(__file__), '/docker/.env'))
     base_url = os.getenv('BASE_URL')
-    url = input("")
+    
+    url = input()
+    url = url.strip("'")
+    url = url.decode("base64")
+    
     url = add_prot(url)
+    
     qrcode = segno.make_qr(url)
     filename = re.sub(r'[^a-zA-Z0-9]', '.', url)
-    qrcode.save(f"/app/images/{filename}.png")
+    qrcode.save(f"/docker/web/images/{filename}.png")
     print(f"{base_url}/images/{filename}.png")

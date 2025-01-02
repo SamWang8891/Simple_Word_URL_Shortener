@@ -3,7 +3,7 @@ import os
 
 
 if __name__ == '__main__':
-    dbfile = os.path.join(os.path.dirname(__file__), 'data.db')
+    dbfile = os.path.join(os.path.dirname(__file__), '/docker/db/data.db')
     con = sqlite3.connect(dbfile)
     cur = con.cursor()
 

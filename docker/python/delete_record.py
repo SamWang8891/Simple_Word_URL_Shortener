@@ -21,10 +21,14 @@ if __name__ == '__main__':
     load_dotenv(os.path.join(os.path.dirname(__file__), '.env'))
     base_url = os.getenv('BASE_URL')
     base_url_without_protocol = base_url.split('://')[1]
-    dbfile = os.path.join(os.path.dirname(__file__), 'data.db')
+    dbfile = os.path.join(os.path.dirname(__file__), '/docker/db/data.db')
     con = sqlite3.connect(dbfile)
     cur = con.cursor()
-    input_url = input("").rstrip('/')
+    
+    input_url = input()
+    input_url = input_url.strip("'")
+    input_url = input_url.decode('base64')
+    input_url = input_url.rstrip('/') # Prevent user input the shortened part starting with "/" like "/the"
 
     # Complete URL
     result = search(cur, input_url, 'orig')
