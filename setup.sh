@@ -79,6 +79,7 @@ fi
 rm -f app/db/data.db
 
 # Initialize database
+mkdir app/db
 python3 init_db.py
 
 # Set permission
