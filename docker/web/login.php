@@ -24,19 +24,22 @@ if (isset($_POST['login'])) {
     #$pass = base64_encode($pass);
     #$user = escapeshellarg($user);
     #$pass = escapeshellarg($pass);
+    
+    $input = "$user\\n$pass";
 
-    $input = $user . "\n" . $pass;
-    #$result = shell_exec("echo -e $input | python3 /docker/python/check_pass.py");
-    echo "<script>alert('$input');</script>";
+    $result = shell_exec("echo -e $input | python3 /docker/python/check_pass.py");
+    echo $result;
+    
+    #echo "<script>alert('$result');</script>";
 
-    // if (shell_exec("echo $user $pass | python3 /docker/python/check_pass.py") === '1') {
-    //     $_SESSION['use'] = $user;
-    //     header("Location:admin.php");
-    //     exit();
-    // }
-    // else {
-    //     echo "<script>alert('Username or password is incorrect. Please try again.');</script>";
-    // }
+    if (shell_exec("echo -e '$result' | python3 /docker/python/check_pass.py") === '1') {
+        $_SESSION['use'] = $user;
+        header("Location:admin.php");
+        exit();
+    }
+    else {
+        echo "<script>alert('Username or password is incorrect. Please try again.');</script>";
+    }
 }
 ?>
 
