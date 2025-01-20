@@ -1,3 +1,5 @@
+This project is succeeded by [Simple URL Shortener](https://github.com/SamWang8891/simple-url-shortener).
+
 # Simple Word URL Shortener
 
 A very simple url shortener that shorts the url into a common English vocabulary so that it's easier to type and remenber!
