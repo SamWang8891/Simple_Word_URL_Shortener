@@ -1,3 +1,6 @@
+這個專案已經被[Simple URL Shortener](https://github.com/SamWang8891/simple-url-shortener)替代。
+
+
 # Simple Word URL Shortener
 
 一個使用常用英文單字來縮短網址的簡單的短網址生成器！
